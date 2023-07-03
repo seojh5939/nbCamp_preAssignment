@@ -9,13 +9,48 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isChecked = false;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Column(
-          children: [
-            titleImageText("버킷리스트"),
-          ],
+        body: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Container(
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                children: [
+                  titleImageText("버킷리스트"),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          isChecked = !isChecked;
+                        },
+                        icon: Icon(
+                          isChecked
+                              ? Icons.check_box
+                              : Icons.check_box_outline_blank_rounded,
+                        ),
+                        color: Colors.green,
+                      ),
+                      Text("버킷리스트 추가 테스트"),
+                      Spacer(),
+                      OutlinedButton(
+                        onPressed: () {},
+                        child: Text("완료!"),
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all<BorderSide>(
+                            BorderSide(color: Colors.blue),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
