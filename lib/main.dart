@@ -63,6 +63,84 @@ class MyApp extends StatelessWidget {
                     ],
                   ),
                 ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: bucketList.length,
+                    itemBuilder: (context, index) {
+                      final item = bucketList[index];
+                      return ListTile(
+                        title: Text(item.title),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    TextEditingController controller =
+                                        TextEditingController(text: item.title);
+                                    return AlertDialog(
+                                      title: Text('추가하기'),
+                                      content: TextField(
+                                        controller: controller,
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            updateItem(index, controller.text);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('저장'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('취소'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text('삭제하기'),
+                                      content: Text('지우시겠습니까?'),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            removeItem(index);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('삭제하기'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('취소하기'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 Row(
                   children: [
                     IconButton(
