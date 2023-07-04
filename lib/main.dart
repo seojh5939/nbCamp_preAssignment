@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/BucketListItem_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'BucketListItem.dart';
 import 'BucketListItem_service.dart';
 
 void main() {
@@ -20,10 +21,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isChecked = false;
     return Consumer<BucketListItemService>(
-        builder: (context, BucketListItemService, child) {
-      List<BucketListItem> bucketList = BucketListItemService.bucketList;
+        builder: (context, bucketListItemService, child) {
+      List<BucketListItem> bucketList = bucketListItemService.bucketList;
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            BucketListItemService.addItem(
+                            bucketListItemService.addItem(
                               content: textEditingController.text,
                             );
                             textEditingController.clear();
@@ -68,10 +68,11 @@ class MyApp extends StatelessWidget {
                             children: [
                               IconButton(
                                 onPressed: () {
-                                  isChecked = !isChecked;
+                                  bucketListItemService.changeCheckBox(index);
                                 },
                                 icon: Icon(
-                                  isChecked
+                                  bucketListItemService
+                                          .bucketList[index].isCompleted
                                       ? Icons.check_box
                                       : Icons.check_box_outline_blank_rounded,
                                 ),
@@ -100,7 +101,7 @@ class MyApp extends StatelessWidget {
                                         actions: [
                                           ElevatedButton(
                                             onPressed: () {
-                                              BucketListItemService.updateItem(
+                                              bucketListItemService.updateItem(
                                                   index: index,
                                                   content: controller.text);
                                               Navigator.pop(context);
@@ -131,7 +132,7 @@ class MyApp extends StatelessWidget {
                                         actions: [
                                           ElevatedButton(
                                             onPressed: () {
-                                              BucketListItemService.removeItem(
+                                              bucketListItemService.removeItem(
                                                   index: index);
                                               Navigator.pop(context);
                                             },
