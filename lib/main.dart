@@ -3,9 +3,12 @@ import 'package:flutter_application_1/BucketListItem_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'BucketListItem.dart';
-import 'BucketListItem_service.dart';
 
-void main() {
+late SharedPreferences prefs;
+void main() async {
+  // 위젯 로딩전에 SharedPreference를 로드하기위해 사용
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(
     MultiProvider(
       providers: [
@@ -51,6 +54,8 @@ class MyApp extends StatelessWidget {
                             bucketListItemService.addItem(
                               content: textEditingController.text,
                             );
+                            // 기기에 저장
+                            bucketListItemService.saveBucketItem();
                             textEditingController.clear();
                           },
                           child: Text('기록하기'),

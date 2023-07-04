@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'BucketListItem.dart';
@@ -5,6 +7,10 @@ import 'main.dart';
 
 // Memo 데이터는 모두 여기서 관리
 class BucketListItemService extends ChangeNotifier {
+  BucketListItemService() {
+    loadBucketItem();
+  }
+
   List<BucketListItem> bucketList = [
     //BucketListItem(content: ),
   ];
@@ -22,6 +28,21 @@ class BucketListItemService extends ChangeNotifier {
   removeItem({required int index}) {
     bucketList.removeAt(index);
     notifyListeners();
+  }
+
+  saveBucketItem() {
+    List bucketItemJson = bucketList.map((item) => item.toJson()).toList();
+    String json = jsonEncode(bucketItemJson);
+    prefs.setString('bucketList', json);
+  }
+
+  loadBucketItem() {
+    String? json = prefs.getString('bucketList');
+    if (json == null) return;
+
+    List bucketJsonList = jsonDecode(json);
+    bucketList =
+        bucketJsonList.map((json) => BucketListItem.fromJson(json)).toList();
   }
 
   // 체크박스 클릭시 체크 or 체크해제

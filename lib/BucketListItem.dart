@@ -7,4 +7,16 @@ class BucketListItem {
 
   String content;
   bool isCompleted;
+
+  Map toJson() {
+    return {
+      'isCompleted': isCompleted,
+      'content': content,
+    };
+  }
+
+  factory BucketListItem.fromJson(json) {
+    return BucketListItem(
+        isCompleted: json['isCompleted'], content: json['content']);
+  }
 }
