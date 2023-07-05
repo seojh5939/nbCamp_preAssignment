@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/BucketListItem_service.dart';
+import 'package:flutter_application_1/pages/bucketEdit.dart';
 import 'package:provider/provider.dart';
 
 import '../BucketListItem.dart';
@@ -266,7 +267,7 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => BucketDoneList()),
+                      MaterialPageRoute(builder: (context) => BucketEdit()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
