@@ -10,43 +10,45 @@ class BucketDoneList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BucketListItemService>(
-        builder: (context, bucketListItemService, child) {
-      return SafeArea(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              color: Colors.deepOrangeAccent,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image.network(
-                      "https://cdn.pixabay.com/photo/2014/03/25/16/27/checker-flags-297188_1280.png"),
-                  Text(
-                    "완료했어요!",
-                    style: TextStyle(
-                      fontSize: 45,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+    return Scaffold(
+      body: Consumer<BucketListItemService>(
+          builder: (context, bucketListItemService, child) {
+        return SafeArea(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.deepOrangeAccent,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.network(
+                        "https://cdn.pixabay.com/photo/2014/03/25/16/27/checker-flags-297188_1280.png"),
+                    Text(
+                      "완료했어요!",
+                      style: TextStyle(
+                        fontSize: 45,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 600,
-              child: ListView.builder(
-                  itemCount: bucketListItemService.bucketList.length,
-                  itemBuilder: (context, index) {
-                    return DoneListObject(
-                        content:
-                            bucketListItemService.bucketList[index].content);
-                  }),
-            ),
-          ],
-        ),
-      );
-    });
+              SizedBox(
+                height: 600,
+                child: ListView.builder(
+                    itemCount: bucketListItemService.bucketList.length,
+                    itemBuilder: (context, index) {
+                      return DoneListObject(
+                          content:
+                              bucketListItemService.bucketList[index].content);
+                    }),
+              ),
+            ],
+          ),
+        );
+      }),
+    );
   }
 }
