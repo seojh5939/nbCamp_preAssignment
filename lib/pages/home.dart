@@ -180,55 +180,57 @@ class Home extends StatelessWidget {
                   : BucketHaveToList(),
             ),
             Center(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => BucketEdit()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(50), // 반지름 값을 조정하여 동그란 모양으로 설정
+              child: bucketListItemService.isDone
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BucketEdit()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                50), // 반지름 값을 조정하여 동그란 모양으로 설정
+                          ),
+                          backgroundColor: ColorList().orange, // 오렌지색 설정
+                        ),
+                        child: Text(
+                          '버킷리스트 등록!',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      // child: Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: TextField(
+                      //         controller: textEditingController,
+                      //         decoration: InputDecoration(
+                      //           hintText: '이루고 싶은 것을 입력하세요',
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     ElevatedButton(
+                      //       onPressed: () {
+                      //         bucketListItemService.addItem(
+                      //           content: textEditingController.text,
+                      //         );
+                      //         // 기기에 저장
+                      //         bucketListItemService.saveBucketItem();
+                      //         textEditingController.clear();
+                      //       },
+                      //       child: Text('기록하기'),
+                      //     ),
+                      //   ],
+                      // ),
                     ),
-                    backgroundColor: ColorList().orange, // 오렌지색 설정
-                  ),
-                  child: Text(
-                    '버킷리스트 등록!',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                // child: Row(
-                //   children: [
-                //     Expanded(
-                //       child: TextField(
-                //         controller: textEditingController,
-                //         decoration: InputDecoration(
-                //           hintText: '이루고 싶은 것을 입력하세요',
-                //         ),
-                //       ),
-                //     ),
-                //     ElevatedButton(
-                //       onPressed: () {
-                //         bucketListItemService.addItem(
-                //           content: textEditingController.text,
-                //         );
-                //         // 기기에 저장
-                //         bucketListItemService.saveBucketItem();
-                //         textEditingController.clear();
-                //       },
-                //       child: Text('기록하기'),
-                //     ),
-                //   ],
-                // ),
-              ),
             ),
             SizedBox(
               height: 50,
