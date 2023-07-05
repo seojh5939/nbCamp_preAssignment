@@ -200,7 +200,7 @@ class Home extends StatelessWidget {
                           backgroundColor: ColorList().orange, // 오렌지색 설정
                         ),
                         child: Text(
-                          '버킷리스트 등록!',
+                          '버킷리스트 등록 \u{1F4DD}',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
