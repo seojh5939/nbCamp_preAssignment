@@ -27,6 +27,9 @@ class Home extends StatelessWidget {
               children: [
                 Column(
                   children: [
+                    SizedBox(
+                      height: 10,
+                    ),
                     Text(
                       "\n버킷리스트가",
                       style: TextStyle(
@@ -53,6 +56,33 @@ class Home extends StatelessWidget {
                         ),
                       ],
                     ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //           builder: (context) => BucketDoneList()),
+                    //     );
+                    //   },
+                    //   style: ElevatedButton.styleFrom(
+                    //     shape: RoundedRectangleBorder(
+                    //       borderRadius: BorderRadius.circular(
+                    //           50), // 반지름 값을 조정하여 동그란 모양으로 설정
+                    //     ),
+                    //     backgroundColor:
+                    //         Color.fromARGB(255, 251, 212, 127), // 주황색으로 설정
+                    //   ),
+                    //   child: Text(
+                    //     '달성 했어요 \u{1F389}',
+                    //     style: TextStyle(
+                    //       fontSize: 20,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
                 Expanded(
@@ -62,6 +92,64 @@ class Home extends StatelessWidget {
             ),
             SizedBox(
               height: 30,
+            ),
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BucketDoneList()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50), // 반지름 값을 조정하여 동그란 모양으로 설정
+                      ),
+                      backgroundColor:
+                          Color.fromARGB(255, 251, 212, 127), // 주황색으로 설정
+                    ),
+                    child: Text(
+                      '하고 싶어요 \u{1F64F}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BucketDoneList()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            50), // 반지름 값을 조정하여 동그란 모양으로 설정
+                      ),
+                      backgroundColor:
+                          Color.fromARGB(255, 209, 208, 208), // 주황색으로 설정
+                    ),
+                    child: Text(
+                      '달성 했어요 \u{1F389}',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: ListView.builder(
