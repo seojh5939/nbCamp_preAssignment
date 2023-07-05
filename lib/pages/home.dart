@@ -3,7 +3,10 @@ import 'package:flutter_application_1/BucketListItem_service.dart';
 import 'package:provider/provider.dart';
 
 import '../BucketListItem.dart';
+import '../Util/colorList.dart';
+import '../doneListObject.dart';
 import 'bucketDoneList.dart';
+import 'bucketHaveToList.dart';
 
 TextEditingController textEditingController = TextEditingController();
 
@@ -19,7 +22,6 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //titleImageText("버킷리스트 \u{1F60D}"),
             SizedBox(
               height: 30,
             ),
@@ -31,31 +33,51 @@ class Home extends StatelessWidget {
                       height: 10,
                     ),
                     Text(
-                      "\n버킷리스트가",
+                      "\n버킷리스트",
                       style: TextStyle(
                         fontSize: 25,
                         //fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "\"${bucketList.length} 개\"",
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
+                    bucketListItemService.isDone
+                        ? Row(
+                            children: [
+                              Text(
+                                "\"${bucketListItemService.printBucketDoneListCount()} 개\"",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              Text(
+                                " 완료했어요!",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Text(
+                                "\"${bucketListItemService.printBucketListCount()} 개\"",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                              Text(
+                                " 남았어요!",
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Text(
-                          " 남았어요!",
-                          style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
                     // SizedBox(
                     //   height: 10,
                     // ),
@@ -97,21 +119,21 @@ class Home extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // 하고싶어요
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BucketDoneList()),
-                      );
+                      if (bucketListItemService.isDone) {
+                        bucketListItemService.isClickedBucketListButton();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             50), // 반지름 값을 조정하여 동그란 모양으로 설정
                       ),
-                      backgroundColor:
-                          Color.fromARGB(255, 251, 212, 127), // 주황색으로 설정
+                      backgroundColor: bucketListItemService.isDone
+                          ? ColorList().gray
+                          : ColorList().yellow, // 주황색으로 설정
                     ),
                     child: Text(
                       '하고 싶어요 \u{1F64F}',
@@ -124,21 +146,21 @@ class Home extends StatelessWidget {
                   SizedBox(
                     width: 20,
                   ),
+                  // 달성했어요
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => BucketDoneList()),
-                      );
+                      if (!bucketListItemService.isDone) {
+                        bucketListItemService.isClickedBucketListButton();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             50), // 반지름 값을 조정하여 동그란 모양으로 설정
                       ),
-                      backgroundColor:
-                          Color.fromARGB(255, 209, 208, 208), // 주황색으로 설정
+                      backgroundColor: bucketListItemService.isDone
+                          ? ColorList().yellow
+                          : ColorList().gray, // 주황색으로 설정
                     ),
                     child: Text(
                       '달성 했어요 \u{1F389}',
@@ -152,111 +174,9 @@ class Home extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: bucketList.length,
-                itemBuilder: (context, index) {
-                  final item = bucketList[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(3.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ListTile(
-                        title: Row(
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                bucketListItemService.changeCheckBox(index);
-                              },
-                              icon: Icon(
-                                bucketListItemService
-                                        .bucketList[index].isCompleted
-                                    ? Icons.check_box
-                                    : Icons.check_box_outline_blank_rounded,
-                              ),
-                              color: Colors.green,
-                            ),
-                            Text(item.content),
-                          ],
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    TextEditingController controller =
-                                        TextEditingController(
-                                            text: item.content);
-                                    return AlertDialog(
-                                      title: Text('수정하기'),
-                                      content: TextField(
-                                        controller: controller,
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            bucketListItemService.updateItem(
-                                                index: index,
-                                                content: controller.text);
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('저장'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('취소'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text('삭제하기'),
-                                      content: Text('지우시겠습니까?'),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            bucketListItemService.removeItem(
-                                                index: index);
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('삭제하기'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('취소하기'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+              child: bucketListItemService.isDone
+                  ? BucketDoneList()
+                  : BucketHaveToList(),
             ),
             Center(
               child: Padding(
