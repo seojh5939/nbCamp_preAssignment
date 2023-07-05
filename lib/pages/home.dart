@@ -194,8 +194,7 @@ class Home extends StatelessWidget {
                       borderRadius:
                           BorderRadius.circular(50), // 반지름 값을 조정하여 동그란 모양으로 설정
                     ),
-                    backgroundColor:
-                        Color.fromARGB(255, 245, 122, 74), // 주황색으로 설정
+                    backgroundColor: ColorList().orange, // 오렌지색 설정
                   ),
                   child: Text(
                     '버킷리스트 등록!',

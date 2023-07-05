@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'BucketListItem.dart';
 import 'main.dart';
 
-// 데이터는 모두 여기서 관리
+/// 데이터는 모두 여기서 관리
 class BucketListItemService extends ChangeNotifier {
   BucketListItemService() {
     loadBucketItem();
   }
 
-  // "달성했어요" 확인
+  /// "달성했어요" 확인
   bool isDone = false;
 
   List<BucketListItem> bucketList = [
@@ -48,19 +48,19 @@ class BucketListItemService extends ChangeNotifier {
         bucketJsonList.map((json) => BucketListItem.fromJson(json)).toList();
   }
 
-  // 체크박스 클릭시 체크 or 체크해제
+  /// 체크박스 클릭시 체크 or 체크해제
   changeCheckBox(int index) {
     bucketList[index].isCompleted = !bucketList[index].isCompleted;
     notifyListeners();
   }
 
-  // "하고싶어요", "달성했어요" 버튼클릭시 상태값 변경
+  /// "하고싶어요", "달성했어요" 버튼클릭시 상태값 변경
   isClickedBucketListButton() {
     isDone = !isDone;
     notifyListeners();
   }
 
-  // 완료되지않은 버킷목록 개수 출력
+  /// 완료되지않은 버킷목록 개수 출력
   String printBucketListCount() {
     return bucketList
         .where((element) {
@@ -70,7 +70,7 @@ class BucketListItemService extends ChangeNotifier {
         .toString();
   }
 
-  // 완료된 버킷 목록 개수출력
+  /// 완료된 버킷 목록 개수출력
   String printBucketDoneListCount() {
     return bucketList
         .where((element) {
