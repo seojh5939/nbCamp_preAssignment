@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/doneListObject.dart';
 import 'package:provider/provider.dart';
 
+import '../BucketListItem.dart';
 import '../BucketListItem_service.dart';
 
 // 완료한 버킷목록을 보여주는 페이지
@@ -13,6 +14,7 @@ class BucketDoneList extends StatelessWidget {
     return Scaffold(
       body: Consumer<BucketListItemService>(
           builder: (context, bucketListItemService, child) {
+        List<BucketListItem> bucketList = bucketListItemService.bucketList;
         return SafeArea(
           child: Column(
             children: [
@@ -40,9 +42,11 @@ class BucketDoneList extends StatelessWidget {
                 child: ListView.builder(
                     itemCount: bucketListItemService.bucketList.length,
                     itemBuilder: (context, index) {
-                      return DoneListObject(
-                          content:
-                              bucketListItemService.bucketList[index].content);
+                      return bucketList[index].isCompleted
+                          ? DoneListObject(
+                              content: bucketListItemService
+                                  .bucketList[index].content)
+                          : Container();
                     }),
               ),
             ],
