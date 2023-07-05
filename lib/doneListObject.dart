@@ -22,25 +22,23 @@ class DoneListObject extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Icon(Icons.camera),
+              Container(
+                width: 8,
+              ),
+              Text("\u{1F389}", style: TextStyle(fontSize: 25)),
+              Container(
+                width: 15,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      content,
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
-                    ),
+                  Text(
+                    content,
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      "2023년2월28일",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
-                    ),
+                  Text(
+                    "2023년2월28일",
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 13),
                   ),
                 ],
               ),
