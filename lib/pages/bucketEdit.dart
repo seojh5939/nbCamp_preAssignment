@@ -20,9 +20,7 @@ class BucketEdit extends StatelessWidget {
             Center(
               child: Container(
                 height: 100,
-                child: Expanded(
-                  child: Image.asset('assets/images/home_img.png'),
-                ),
+                child: Image.asset('assets/images/home_img.png'),
               ),
             ),
             SizedBox(height: 30),
@@ -79,6 +77,36 @@ class BucketEdit extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+            ),
+            SizedBox(height: 20),
+            // 알림기능
+            Text(
+              "   알림 \u{23F0}",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            MaterialButton(
+              color: Colors.white,
+              minWidth: double.infinity,
+              height: 45,
+              onPressed: () => {
+                showTimePicker(context: context, initialTime: TimeOfDay.now()),
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "23년7월6일 오전 11시00분",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Icon(Icons.keyboard_arrow_right),
+                ],
               ),
             ),
             SizedBox(height: 20),
