@@ -59,10 +59,10 @@ class BucketHaveToList extends StatelessWidget {
                             TextButton(
                               onPressed: () {
                                 Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BucketEdit()),
-                                ).then(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => BucketEdit()))
+                                    .then(
                                   (value) {
                                     Navigator.pop(
                                         context); // Close the dialog popup

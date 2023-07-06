@@ -1,12 +1,17 @@
 //버켓 수정페이지.
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/BucketListItem.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
-import 'package:flutter_application_1/pages/home.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
 
-class BucketEdit extends StatelessWidget {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController dateController = TextEditingController();
-  final TextEditingController contentController = TextEditingController();
+class BucketEdit extends StatefulWidget {
+  @override
+  _BucketEditState createState() => _BucketEditState();
+}
+
+class _BucketEditState extends State<BucketEdit> {
+  DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +22,7 @@ class BucketEdit extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 40),
             Center(
               child: Container(
                 height: 100,
@@ -32,10 +38,12 @@ class BucketEdit extends StatelessWidget {
             ),
             SizedBox(height: 3),
             TextField(
-              controller: titleController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.white, // 아웃라인흰색으로 변경
+                  ),
                 ),
                 hintText: '제목을 입력해주세요',
                 filled: true,
@@ -49,35 +57,41 @@ class BucketEdit extends StatelessWidget {
             ),
             SizedBox(height: 3),
             InkWell(
-              //팝업기능 구현해야함
-              child: IgnorePointer(
-                child: TextField(
-                  controller: dateController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    hintText: '언제까지 달성할까요?',
-                    filled: true,
-                    fillColor: Colors.white,
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.calendar_today), //달력아이콘
-                      onPressed: () async {
-                        // 현재 선택된 날짜를 가져옵니다.
-                        DateTime? selectedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                        );
-
-                        // 선택된 날짜가 있다면 텍스트 필드에 값을 설정합니다.
-                        if (selectedDate != null) {
-                          dateController.text = selectedDate.toString();
-                        }
-                      },
-                    ),
+              onTap: () async {
+                selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2024),
+                );
+                setState(() {});
+              },
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  hintText: '언제까지 달성할까요?',
+                  filled: true,
+                  fillColor: Colors.white,
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.calendar_today), //달력아이콘
+                    onPressed: () async {
+                      selectedDate = await showDatePicker(
+                        //달력팝업 후 날짜선택부분
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2023),
+                        lastDate: DateTime(2099),
+                      );
+                      setState(() {});
+                    },
+                  ),
+                ),
+                controller: TextEditingController(
+                  text: selectedDate != null
+                      ? DateFormat('yyyy-MM-dd').format(selectedDate!)
+                      : '',
                 ),
               ),
             ),
@@ -88,7 +102,6 @@ class BucketEdit extends StatelessWidget {
             ),
             SizedBox(height: 3),
             TextField(
-              controller: contentController,
               maxLines: 5,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -103,11 +116,12 @@ class BucketEdit extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => BucketEdit()), //Edit화면으로전환
-                  );
+                  Navigator.of(context).pop();
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => Home()), //home화면으로전환
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -117,7 +131,7 @@ class BucketEdit extends StatelessWidget {
                     backgroundColor: ColorList().orange // 오렌지색 설정
                     ),
                 child: Text(
-                  '버킷리스트 등록!',
+                  '버킷리스트 등록 \u{1F4DD}',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
