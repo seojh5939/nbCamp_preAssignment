@@ -8,23 +8,23 @@ import 'main.dart';
 /// 데이터는 모두 여기서 관리
 class BucketListItemService extends ChangeNotifier {
   BucketListItemService() {
-    loadBucketItem();
+    // loadBucketItem();
   }
 
   /// "달성했어요" 확인
   bool isDone = false;
 
-  List<BucketListItem> bucketList = [
-    //BucketListItem(content: ),
-  ];
+  List<BucketListItem> bucketList = [];
 
-  addItem({required String content}) {
-    bucketList.add(BucketListItem(content: content));
+  addItem({required String title, required String content}) {
+    bucketList.add(BucketListItem(content: content, title: title));
     notifyListeners(); //Consumer<MemoService>의 builder 부분을 호출해서 화면 새로고침
   }
 
-  updateItem({required int index, required String content}) {
+  updateItem(
+      {required int index, required String title, required String content}) {
     bucketList[index].content = content;
+    bucketList[index].title = title;
     notifyListeners();
   }
 

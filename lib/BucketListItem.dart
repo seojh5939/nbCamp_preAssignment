@@ -2,7 +2,7 @@
 class BucketListItem {
   BucketListItem({
     this.isCompleted = false,
-    this.title = "",
+    required this.title,
     required this.content,
     this.dttm = "",
   });
