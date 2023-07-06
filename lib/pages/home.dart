@@ -167,6 +167,7 @@ class Home extends StatelessWidget {
                                 index:
                                     bucketListItemService.bucketList.length - 1,
                                 bucketList: bucketList,
+                                isCreat: true,
                               ),
                             ),
                           );

@@ -11,12 +11,15 @@ class BucketEdit extends StatelessWidget {
   final TextEditingController dateController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
-  BucketEdit({super.key, required this.bucketList, required this.index});
+  BucketEdit(
+      {super.key,
+      required this.bucketList,
+      required this.index,
+      required this.isCreat});
+
   final int index;
   final List<BucketListItem> bucketList;
-  static String onChangeTitle = "";
-  static String onChangeContent = "";
-  static String onChangeDttm = "";
+  final bool isCreat;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,6 @@ class BucketEdit extends StatelessWidget {
     BucketListItem bucketListItem = bucketListItemService.bucketList[index];
     contentController.text = bucketListItem.content;
     titleController.text = bucketListItem.title;
-
     return Scaffold(
       backgroundColor: ColorList().gray,
       body: Padding(
@@ -57,9 +59,6 @@ class BucketEdit extends StatelessWidget {
                 filled: true,
                 fillColor: Colors.white,
               ),
-              onChanged: (value) {
-                onChangeTitle = value;
-              },
             ),
             SizedBox(height: 20),
             Text(
@@ -89,7 +88,6 @@ class BucketEdit extends StatelessWidget {
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                         );
-
                         // 선택된 날짜가 있다면 텍스트 필드에 값을 설정합니다.
                         if (selectedDate != null) {
                           dateController.text = selectedDate.toString();
@@ -117,15 +115,13 @@ class BucketEdit extends StatelessWidget {
                 filled: true,
                 fillColor: Colors.white,
               ),
-              onChanged: (value) {
-                onChangeContent = value;
-              },
             ),
             SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  if (onChangeContent.isEmpty && onChangeContent.isEmpty) {
+                  if (titleController.text.isEmpty ||
+                      contentController.text.isEmpty) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -146,10 +142,9 @@ class BucketEdit extends StatelessWidget {
                   } else {
                     bucketListItemService.updateItem(
                         index: index,
-                        title: onChangeTitle,
-                        content: onChangeContent);
-                    onChangeContent = "";
-                    onChangeTitle = "";
+                        title: titleController.text,
+                        content: contentController.text);
+
                     Navigator.of(context).pop();
                   }
                 },

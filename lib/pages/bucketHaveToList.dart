@@ -66,6 +66,7 @@ class BucketHaveToList extends StatelessWidget {
                                         builder: (_) => BucketEdit(
                                           index: index,
                                           bucketList: bucketList,
+                                          isCreat: false,
                                         ),
                                       ),
                                     ).then(
