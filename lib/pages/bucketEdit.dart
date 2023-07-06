@@ -15,6 +15,7 @@ class _BucketEditState extends State<BucketEdit> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context); // 테마 가져오기 추가
     return Scaffold(
       backgroundColor: ColorList().gray,
       body: Padding(
@@ -58,6 +59,7 @@ class _BucketEditState extends State<BucketEdit> {
             SizedBox(height: 3),
             InkWell(
               onTap: () async {
+                // 날짜 이벤트처리
                 selectedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
@@ -81,8 +83,26 @@ class _BucketEditState extends State<BucketEdit> {
                         //달력팝업 후 날짜선택부분
                         context: context,
                         initialDate: DateTime.now(),
-                        firstDate: DateTime(2023),
-                        lastDate: DateTime(2099),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2030),
+                        builder: (BuildContext context, Widget? child) {
+                          return Theme(
+                            data: theme.copyWith(
+                              colorScheme: theme.colorScheme.copyWith(
+                                primary: const Color.fromARGB(
+                                    255, 251, 212, 127), // 달력 헤더의 색상 변경
+                                onPrimary: Colors.white, // 달력 헤더 텍스트 색상 변경
+                                onSurface: Colors.orange, // 선택한 날짜의 색상 변경
+                              ),
+                              textTheme: theme.textTheme.copyWith(
+                                headline1: TextStyle(
+                                  color: ColorList().yellow, // 달력 날짜 텍스트 색상 변경
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
                       );
                       setState(() {});
                     },
