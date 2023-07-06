@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
 import 'package:flutter_application_1/pages/home.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../alarm_Service.dart';
 
 class BucketEdit extends StatelessWidget {
   final TextEditingController titleController = TextEditingController();
@@ -89,8 +93,28 @@ class BucketEdit extends StatelessWidget {
               color: Colors.white,
               minWidth: double.infinity,
               height: 45,
-              onPressed: () => {
-                showTimePicker(context: context, initialTime: TimeOfDay.now()),
+              onPressed: () {
+                final DateFormat formatter = DateFormat('yyyy-MM-dd');
+                final String formatted = formatter.format(DateTime.now());
+                final DateTime datetime = DateTime.parse(formatted);
+                Future<TimeOfDay?> future = showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.fromDateTime(datetime),
+                );
+                // TODO showTimePicker 확인 시 add하도록.
+                future.then((timeOfDay) {
+                  if (timeOfDay == null) {
+                    return null;
+                  } else {
+                    context.read<AlarmService>().addAlarmItem(
+                          year: datetime.year.toString(),
+                          month: datetime.month.toString(),
+                          day: datetime.day.toString(),
+                          hour: datetime.hour.toString(),
+                          min: datetime.minute.toString(),
+                        );
+                  }
+                });
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
