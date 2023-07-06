@@ -34,7 +34,7 @@ class AlarmService extends ChangeNotifier {
   }
 
   removeAlarmItem({required index}) {
-    alarmList.remove(index);
+    alarmList.removeAt(index);
     notifyListeners();
   }
 }
