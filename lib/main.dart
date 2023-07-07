@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/BucketListItem_service.dart';
-import 'package:flutter_application_1/alarm_Service.dart';
 import 'package:flutter_application_1/pages/home.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +13,6 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => BucketListItemService()),
-        ChangeNotifierProvider(create: (context) => AlarmService()),
       ],
       child: MyApp(),
     ),
