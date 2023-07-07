@@ -11,7 +11,6 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
 class BucketEdit extends StatelessWidget {
-  DateTime? selectedDate;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
@@ -78,15 +77,7 @@ class BucketEdit extends StatelessWidget {
             ),
             SizedBox(height: 3),
             InkWell(
-              onTap: () async {
-// 날짜 이벤트처리
-                selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2024),
-                );
-              },
+              onTap: () {},
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -97,9 +88,9 @@ class BucketEdit extends StatelessWidget {
                   fillColor: Colors.white,
                   suffixIcon: IconButton(
                     icon: Icon(Icons.calendar_today), //달력아이콘
-                    onPressed: () async {
-                      selectedDate = await showDatePicker(
-//달력팝업 후 날짜선택부분
+                    onPressed: () {
+                      //달력팝업 후 날짜선택부분
+                      Future<DateTime?> selectedDate = showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
@@ -114,7 +105,7 @@ class BucketEdit extends StatelessWidget {
                                 onSurface: Colors.orange, // 선택한 날짜의 색상 변경
                               ),
                               textTheme: theme.textTheme.copyWith(
-                                headline1: TextStyle(
+                                displayLarge: TextStyle(
                                   color: ColorList().yellow, // 달력 날짜 텍스트 색상 변경
                                 ),
                               ),
@@ -123,15 +114,22 @@ class BucketEdit extends StatelessWidget {
                           );
                         },
                       );
-//setState(() {});
+                      selectedDate.then((date) {
+                        if (date == null) {
+                          return null;
+                        }
+                        dateController.text =
+                            DateFormat('yyyy-MM-dd').format(date);
+                        bucketListItemService.updateItem(
+                            index: index,
+                            title: titleController.text,
+                            content: contentController.text,
+                            dttm: dateController.text);
+                      });
                     },
                   ),
                 ),
-                controller: TextEditingController(
-                  text: selectedDate != null
-                      ? DateFormat('yyyy-MM-dd').format(selectedDate!)
-                      : '',
-                ),
+                controller: dateController,
               ),
             ),
             SizedBox(height: 20),
