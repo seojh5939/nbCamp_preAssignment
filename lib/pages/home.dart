@@ -6,9 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../model/BucketListItem.dart';
 import '../Util/colorList.dart';
-import '../layout/page_done/doneListItem_Layout.dart';
-import 'bucketDoneList.dart';
-import 'bucketHaveToList.dart';
 
 TextEditingController textEditingController = TextEditingController();
 
