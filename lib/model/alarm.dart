@@ -7,13 +7,14 @@ class Alarm {
     required this.hour,
     required this.min,
   });
-  String year;
-  String month;
-  String day;
-  String hour;
-  String min;
+  int year;
+  int month;
+  int day;
+  int hour;
+  int min;
 
-  String print() {
+  @override
+  String toString() {
     return "$year년$month월$day일 $hour시 $min분";
   }
 

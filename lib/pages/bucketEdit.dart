@@ -165,12 +165,12 @@ class BucketEdit extends StatelessWidget {
                           return null;
                         } else {
                           alarmController.text = Alarm(
-                                  year: datetime.year.toString(),
-                                  month: datetime.month.toString(),
-                                  day: datetime.day.toString(),
-                                  hour: timeOfDay.hour.toString(),
-                                  min: timeOfDay.minute.toString())
-                              .print();
+                                  year: datetime.year,
+                                  month: datetime.month,
+                                  day: datetime.day,
+                                  hour: timeOfDay.hour,
+                                  min: timeOfDay.minute)
+                              .toString();
                           bucketListItemService.updateItem(
                               index: index,
                               title: titleController.text,
