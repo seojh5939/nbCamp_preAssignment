@@ -246,6 +246,27 @@ class BucketEdit extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(
+              height: 30,
+            ),
+            Center(
+              child: IconButton(
+                onPressed: () {
+                  if (isCreat == true) {
+                    bucketListItemService.removeItem(index: index);
+                    Navigator.pop(context); // Close the dialog
+                  } else {
+                    Navigator.pop(context); // Close the dialog
+                  }
+                },
+                icon: Icon(
+                  Icons.cancel,
+                  color: Colors.white,
+                  shadows: [],
+                ),
+                iconSize: 35,
+              ),
+            ),
           ],
         ),
       ),
