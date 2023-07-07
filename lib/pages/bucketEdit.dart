@@ -101,7 +101,7 @@ class BucketEdit extends StatelessWidget {
                   context: context,
                   initialTime: TimeOfDay.fromDateTime(datetime),
                 );
-                // TODO showTimePicker 확인 시 add하도록.
+                // TODO hour && min 값 이상함. 고쳐야 됨.
                 future.then((timeOfDay) {
                   if (timeOfDay == null) {
                     return null;
@@ -113,6 +113,7 @@ class BucketEdit extends StatelessWidget {
                           hour: datetime.hour.toString(),
                           min: datetime.minute.toString(),
                         );
+                    print(datetime.day.toString());
                   }
                 });
               },
@@ -121,13 +122,21 @@ class BucketEdit extends StatelessWidget {
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      "23년7월6일 오전 11시00분",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: context.watch<AlarmService>().alarmList.isNotEmpty
+                        ? Text(
+                            "${context.watch<AlarmService>().alarmList[0].year}년${context.watch<AlarmService>().alarmList[0].month}월${context.watch<AlarmService>().alarmList[0].day}일 ${context.watch<AlarmService>().alarmList[0].hour}시${context.watch<AlarmService>().alarmList[0].month}분",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          )
+                        : Text(
+                            "알람 설정",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
                   Icon(Icons.keyboard_arrow_right),
                 ],
