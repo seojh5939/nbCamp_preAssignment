@@ -9,7 +9,7 @@ import 'main.dart';
 /// 데이터는 모두 여기서 관리
 class BucketListItemService extends ChangeNotifier {
   BucketListItemService() {
-    //loadBucketItem();
+    loadBucketItem();
   }
 
   /// "달성했어요" 확인

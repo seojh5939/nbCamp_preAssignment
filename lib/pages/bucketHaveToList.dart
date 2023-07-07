@@ -81,6 +81,7 @@ class BucketHaveToList extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                         builder: (_) => BucketEdit(
+                                          isCreat: false,
                                           index: index,
                                         ),
                                       ),

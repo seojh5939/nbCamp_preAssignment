@@ -179,6 +179,7 @@ class Home extends StatelessWidget {
                               builder: (_) => BucketEdit(
                                 index:
                                     bucketListItemService.bucketList.length - 1,
+                                isCreat: true,
                               ),
                             ),
                           );
