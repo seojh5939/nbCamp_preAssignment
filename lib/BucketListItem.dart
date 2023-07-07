@@ -4,7 +4,7 @@ class BucketListItem {
     this.isCompleted = false,
     required this.title,
     required this.content,
-    this.dttm = "",
+    required this.dttm,
   });
   String title;
   String content;

@@ -13,6 +13,7 @@ TextEditingController textEditingController = TextEditingController();
 
 class Home extends StatelessWidget {
   const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BucketListItemService>(
@@ -159,7 +160,8 @@ class Home extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          bucketListItemService.addItem(title: '', content: '');
+                          bucketListItemService.addItem(
+                              title: '', content: '', dttm: '');
                           Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -47,6 +47,7 @@ class BucketHaveToList extends StatelessWidget {
                         ),
                       ),
                     ),
+
                     direction: DismissDirection.startToEnd,
                     confirmDismiss: (DismissDirection direction) async {
                       if (direction == DismissDirection.startToEnd) {

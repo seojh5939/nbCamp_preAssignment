@@ -5,8 +5,12 @@ import 'package:flutter_application_1/BucketListItem_service.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
 import 'package:flutter_application_1/pages/home.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_application_1/Util/colorList.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:intl/intl.dart';
 
 class BucketEdit extends StatelessWidget {
+  DateTime? selectedDate;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
@@ -28,6 +32,10 @@ class BucketEdit extends StatelessWidget {
     BucketListItem bucketListItem = bucketListItemService.bucketList[index];
     contentController.text = bucketListItem.content;
     titleController.text = bucketListItem.title;
+    dateController.text = bucketListItem.dttm;
+
+    final ThemeData theme = Theme.of(context); // 테마 가져오기 추가
+
     return Scaffold(
       backgroundColor: ColorList().gray,
       body: Padding(
@@ -35,12 +43,11 @@ class BucketEdit extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 40),
             Center(
               child: Container(
                 height: 100,
-                child: Expanded(
-                  child: Image.asset('assets/images/home_img.png'),
-                ),
+                child: Image.asset('assets/images/home_img.png'),
               ),
             ),
             SizedBox(height: 30),
@@ -54,6 +61,9 @@ class BucketEdit extends StatelessWidget {
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(
+                    color: Colors.white, // 아웃라인흰색으로 변경
+                  ),
                 ),
                 hintText: '제목을 입력해주세요',
                 filled: true,
@@ -67,34 +77,59 @@ class BucketEdit extends StatelessWidget {
             ),
             SizedBox(height: 3),
             InkWell(
-              //팝업기능 구현해야함
-              child: IgnorePointer(
-                child: TextField(
-                  controller: dateController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    hintText: '언제까지 달성할까요?',
-                    filled: true,
-                    fillColor: Colors.white,
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.calendar_today), //달력아이콘
-                      onPressed: () async {
-                        // 현재 선택된 날짜를 가져옵니다.
-                        DateTime? selectedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                        );
-                        // 선택된 날짜가 있다면 텍스트 필드에 값을 설정합니다.
-                        if (selectedDate != null) {
-                          dateController.text = selectedDate.toString();
-                        }
-                      },
-                    ),
+              onTap: () async {
+// 날짜 이벤트처리
+                selectedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2024),
+                );
+              },
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  hintText: '언제까지 달성할까요?',
+                  filled: true,
+                  fillColor: Colors.white,
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.calendar_today), //달력아이콘
+                    onPressed: () async {
+                      selectedDate = await showDatePicker(
+//달력팝업 후 날짜선택부분
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2030),
+                        builder: (BuildContext context, Widget? child) {
+                          return Theme(
+                            data: theme.copyWith(
+                              colorScheme: theme.colorScheme.copyWith(
+                                primary: const Color.fromARGB(
+                                    255, 251, 212, 127), // 달력 헤더의 색상 변경
+                                onPrimary: Colors.white, // 달력 헤더 텍스트 색상 변경
+                                onSurface: Colors.orange, // 선택한 날짜의 색상 변경
+                              ),
+                              textTheme: theme.textTheme.copyWith(
+                                headline1: TextStyle(
+                                  color: ColorList().yellow, // 달력 날짜 텍스트 색상 변경
+                                ),
+                              ),
+                            ),
+                            child: child!,
+                          );
+                        },
+                      );
+//setState(() {});
+                    },
+                  ),
+                ),
+                controller: TextEditingController(
+                  text: selectedDate != null
+                      ? DateFormat('yyyy-MM-dd').format(selectedDate!)
+                      : '',
                 ),
               ),
             ),
@@ -141,9 +176,11 @@ class BucketEdit extends StatelessWidget {
                     );
                   } else {
                     bucketListItemService.updateItem(
-                        index: index,
-                        title: titleController.text,
-                        content: contentController.text);
+                      index: index,
+                      title: titleController.text,
+                      content: contentController.text,
+                      dttm: dateController.text,
+                    );
 
                     Navigator.of(context).pop();
                   }
@@ -156,7 +193,7 @@ class BucketEdit extends StatelessWidget {
                     backgroundColor: ColorList().orange // 오렌지색 설정
                     ),
                 child: Text(
-                  '버킷리스트 등록!',
+                  '버킷리스트 등록 \u{1F4DD}',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
