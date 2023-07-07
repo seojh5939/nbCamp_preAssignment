@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/layout/page_home/bucketDoneList.dart';
+import 'package:flutter_application_1/layout/page_home/bucketHaveToList.dart';
 import 'package:flutter_application_1/service/BucketListItem_service.dart';
 import 'package:flutter_application_1/model/alarm.dart';
 import 'package:flutter_application_1/pages/bucketEdit.dart';
@@ -6,9 +8,6 @@ import 'package:provider/provider.dart';
 
 import '../model/BucketListItem.dart';
 import '../Util/colorList.dart';
-import '../layout/page_done/doneListItem_Layout.dart';
-import 'bucketDoneList.dart';
-import 'bucketHaveToList.dart';
 
 TextEditingController textEditingController = TextEditingController();
 
@@ -39,7 +38,6 @@ class Home extends StatelessWidget {
                       "\n버킷리스트",
                       style: TextStyle(
                         fontSize: 25,
-                        //fontWeight: FontWeight.bold,
                       ),
                     ),
                     bucketListItemService.isDone
@@ -54,7 +52,7 @@ class Home extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                " 완료했어요!",
+                                " 해냈어요!",
                                 style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
@@ -155,51 +153,44 @@ class Home extends StatelessWidget {
                   : BucketHaveToList(),
             ),
             Center(
-              child: bucketListItemService.isDone
-                  ? Container()
-                  : Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          bucketListItemService.addItem(
-                            title: '',
-                            content: '',
-                            dttm: '',
-                            alarmDttm: Alarm(
-                                    year: '',
-                                    month: '',
-                                    day: '',
-                                    hour: '',
-                                    min: '')
-                                .isEmpty(),
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => BucketEdit(
-                                index:
-                                    bucketListItemService.bucketList.length - 1,
-                                isCreat: true,
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                50), // 반지름 값을 조정하여 동그란 모양으로 설정
-                          ),
-                          backgroundColor: ColorList().orange, // 오렌지색 설정
-                        ),
-                        child: Text(
-                          '버킷리스트 등록 \u{1F4DD}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    bucketListItemService.addItem(
+                      title: '',
+                      content: '',
+                      dttm: '',
+                      alarmDttm:
+                          Alarm(year: -1, month: -1, day: -1, hour: -1, min: -1)
+                              .isEmpty(),
+                    );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => BucketEdit(
+                          index: bucketListItemService.bucketList.length - 1,
+                          isCreat: true,
                         ),
                       ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(50), // 반지름 값을 조정하여 동그란 모양으로 설정
                     ),
+                    backgroundColor: ColorList().orange, // 오렌지색 설정
+                  ),
+                  child: Text(
+                    '버킷리스트 등록 \u{1F4DD}',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 50),
           ],
