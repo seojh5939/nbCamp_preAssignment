@@ -20,7 +20,16 @@ class BucketDoneList extends StatelessWidget {
             return bucketList[index].isCompleted
                 ? DoneListObject(
                     content: bucketListItemService.bucketList[index].title)
-                : Container();
+                : Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Container(),
+                    ),
+                  );
           });
     });
   }
