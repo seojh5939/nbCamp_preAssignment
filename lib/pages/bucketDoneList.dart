@@ -19,7 +19,7 @@ class BucketDoneList extends StatelessWidget {
           itemBuilder: (context, index) {
             return bucketList[index].isCompleted
                 ? DoneListObject(
-                    content: bucketListItemService.bucketList[index].content)
+                    content: bucketListItemService.bucketList[index].title)
                 : Container();
           });
     });
