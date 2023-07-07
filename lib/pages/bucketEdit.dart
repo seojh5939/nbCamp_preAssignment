@@ -149,9 +149,17 @@ class BucketEdit extends StatelessWidget {
                       final String formatted = formatter.format(DateTime.now());
                       final DateTime datetime = DateTime.parse(formatted);
                       Future<TimeOfDay?> future = showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.fromDateTime(datetime),
-                      );
+                          context: context,
+                          initialTime: TimeOfDay.fromDateTime(datetime),
+                          builder: (BuildContext context, Widget? child) {
+                            return Theme(
+                              data: ThemeData(
+                                colorScheme: ColorScheme.light(
+                                    primary: ColorList().yellow),
+                              ),
+                              child: child!,
+                            );
+                          });
                       future.then((timeOfDay) {
                         if (timeOfDay == null) {
                           return null;
