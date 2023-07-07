@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'BucketListItem.dart';
+import 'alarm.dart';
 import 'main.dart';
 
 /// 데이터는 모두 여기서 관리
@@ -17,19 +18,26 @@ class BucketListItemService extends ChangeNotifier {
   List<BucketListItem> bucketList = [];
 
   addItem(
-      {required String title, required String content, required String dttm}) {
-    bucketList.add(BucketListItem(content: content, title: title, dttm: dttm));
+      {required String title,
+      required String content,
+      required String dttm,
+      required String alarmDttm}) {
+    bucketList.add(BucketListItem(
+        title: title, content: content, dttm: dttm, alarmDttm: alarmDttm));
     notifyListeners(); //Consumer<MemoService>의 builder 부분을 호출해서 화면 새로고침
   }
 
-  updateItem(
-      {required int index,
-      required String title,
-      required String content,
-      required String dttm}) {
+  updateItem({
+    required int index,
+    required String title,
+    required String content,
+    required String dttm,
+    required String alarmDttm,
+  }) {
     bucketList[index].content = content;
     bucketList[index].title = title;
     bucketList[index].dttm = dttm;
+    bucketList[index].alarmDttm = alarmDttm;
     notifyListeners();
   }
 

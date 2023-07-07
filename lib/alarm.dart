@@ -12,4 +12,10 @@ class Alarm {
   String day;
   String hour;
   String min;
+
+  String print() {
+    return "$year년$month월$day일 $hour시 $min분";
+  }
+
+  String isEmpty() => "";
 }

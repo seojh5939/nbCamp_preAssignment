@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/BucketListItem_service.dart';
+import 'package:flutter_application_1/alarm.dart';
 import 'package:flutter_application_1/pages/bucketEdit.dart';
 import 'package:provider/provider.dart';
 
@@ -161,15 +162,23 @@ class Home extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           bucketListItemService.addItem(
-                              title: '', content: '', dttm: '');
+                            title: '',
+                            content: '',
+                            dttm: '',
+                            alarmDttm: Alarm(
+                                    year: '',
+                                    month: '',
+                                    day: '',
+                                    hour: '',
+                                    min: '')
+                                .isEmpty(),
+                          );
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => BucketEdit(
                                 index:
                                     bucketListItemService.bucketList.length - 1,
-                                bucketList: bucketList,
-                                isCreat: true,
                               ),
                             ),
                           );
