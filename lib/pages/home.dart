@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/BucketListItem_service.dart';
-import 'package:flutter_application_1/alarm.dart';
+import 'package:flutter_application_1/service/BucketListItem_service.dart';
+import 'package:flutter_application_1/model/alarm.dart';
 import 'package:flutter_application_1/pages/bucketEdit.dart';
 import 'package:provider/provider.dart';
 
-import '../BucketListItem.dart';
+import '../model/BucketListItem.dart';
 import '../Util/colorList.dart';
-import '../doneListObject.dart';
+import '../layout/page_done/doneListItem_Layout.dart';
 import 'bucketDoneList.dart';
 import 'bucketHaveToList.dart';
 

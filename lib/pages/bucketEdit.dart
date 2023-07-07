@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/BucketListItem.dart';
-import 'package:flutter_application_1/BucketListItem_service.dart';
+import 'package:flutter_application_1/model/BucketListItem.dart';
+import 'package:flutter_application_1/service/BucketListItem_service.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
-import 'package:flutter_application_1/alarm.dart';
+import 'package:flutter_application_1/model/alarm.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 

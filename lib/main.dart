@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/BucketListItem_service.dart';
+import 'package:flutter_application_1/service/BucketListItem_service.dart';
 import 'package:flutter_application_1/pages/home.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Util/colorList.dart';
 
 late SharedPreferences prefs;
 void main() async {
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color.fromARGB(255, 230, 229, 229),
+        backgroundColor: ColorList().background,
         body: const Home(),
       ),
     );

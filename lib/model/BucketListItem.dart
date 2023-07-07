@@ -1,7 +1,7 @@
 // 버킷리스트 Data
 // ignore_for_file: prefer_initializing_formals
 
-import 'package:flutter_application_1/alarm.dart';
+import 'package:flutter_application_1/model/alarm.dart';
 
 class BucketListItem {
   BucketListItem(

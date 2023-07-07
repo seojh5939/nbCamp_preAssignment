@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'BucketListItem.dart';
-import 'alarm.dart';
-import 'main.dart';
+import '../model/BucketListItem.dart';
+import '../model/alarm.dart';
+import '../main.dart';
 
 /// 데이터는 모두 여기서 관리
 class BucketListItemService extends ChangeNotifier {

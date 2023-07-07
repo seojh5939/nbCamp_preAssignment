@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/doneListObject.dart';
+import 'package:flutter_application_1/layout/page_home/done/doneListItem_Layout.dart';
 import 'package:provider/provider.dart';
 
-import '../BucketListItem.dart';
-import '../BucketListItem_service.dart';
+import '../../model/BucketListItem.dart';
+import '../../service/BucketListItem_service.dart';
 
 // 완료한 버킷목록
 class BucketDoneList extends StatelessWidget {
