@@ -14,17 +14,22 @@ class BucketListItemService extends ChangeNotifier {
   /// "달성했어요" 확인
   bool isDone = false;
 
-  List<BucketListItem> bucketList = [
-    //BucketListItem(content: ),
-  ];
+  List<BucketListItem> bucketList = [];
 
-  addItem({required String content}) {
-    bucketList.add(BucketListItem(content: content));
+  addItem(
+      {required String title, required String content, required String dttm}) {
+    bucketList.add(BucketListItem(content: content, title: title, dttm: dttm));
     notifyListeners(); //Consumer<MemoService>의 builder 부분을 호출해서 화면 새로고침
   }
 
-  updateItem({required int index, required String content}) {
+  updateItem(
+      {required int index,
+      required String title,
+      required String content,
+      required String dttm}) {
     bucketList[index].content = content;
+    bucketList[index].title = title;
+    bucketList[index].dttm = dttm;
     notifyListeners();
   }
 

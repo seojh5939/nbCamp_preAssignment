@@ -1,21 +1,41 @@
 //버켓 수정페이지.
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/BucketListItem.dart';
+import 'package:flutter_application_1/BucketListItem_service.dart';
+import 'package:flutter_application_1/Util/colorList.dart';
+import 'package:flutter_application_1/pages/home.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
-class BucketEdit extends StatefulWidget {
-  @override
-  _BucketEditState createState() => _BucketEditState();
-}
-
-class _BucketEditState extends State<BucketEdit> {
+class BucketEdit extends StatelessWidget {
   DateTime? selectedDate;
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController contentController = TextEditingController();
+
+  BucketEdit(
+      {super.key,
+      required this.bucketList,
+      required this.index,
+      required this.isCreat});
+
+  final int index;
+  final List<BucketListItem> bucketList;
+  final bool isCreat;
 
   @override
   Widget build(BuildContext context) {
+    BucketListItemService bucketListItemService =
+        context.read<BucketListItemService>();
+    BucketListItem bucketListItem = bucketListItemService.bucketList[index];
+    contentController.text = bucketListItem.content;
+    titleController.text = bucketListItem.title;
+    dateController.text = bucketListItem.dttm;
+
     final ThemeData theme = Theme.of(context); // 테마 가져오기 추가
+
     return Scaffold(
       backgroundColor: ColorList().gray,
       body: Padding(
@@ -27,9 +47,7 @@ class _BucketEditState extends State<BucketEdit> {
             Center(
               child: Container(
                 height: 100,
-                child: Expanded(
-                  child: Image.asset('assets/images/home_img.png'),
-                ),
+                child: Image.asset('assets/images/home_img.png'),
               ),
             ),
             SizedBox(height: 30),
@@ -39,6 +57,7 @@ class _BucketEditState extends State<BucketEdit> {
             ),
             SizedBox(height: 3),
             TextField(
+              controller: titleController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
@@ -59,14 +78,13 @@ class _BucketEditState extends State<BucketEdit> {
             SizedBox(height: 3),
             InkWell(
               onTap: () async {
-                // 날짜 이벤트처리
+// 날짜 이벤트처리
                 selectedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2024),
                 );
-                setState(() {});
               },
               child: TextField(
                 decoration: InputDecoration(
@@ -80,7 +98,7 @@ class _BucketEditState extends State<BucketEdit> {
                     icon: Icon(Icons.calendar_today), //달력아이콘
                     onPressed: () async {
                       selectedDate = await showDatePicker(
-                        //달력팝업 후 날짜선택부분
+//달력팝업 후 날짜선택부분
                         context: context,
                         initialDate: DateTime.now(),
                         firstDate: DateTime(2000),
@@ -104,7 +122,7 @@ class _BucketEditState extends State<BucketEdit> {
                           );
                         },
                       );
-                      setState(() {});
+//setState(() {});
                     },
                   ),
                 ),
@@ -122,6 +140,7 @@ class _BucketEditState extends State<BucketEdit> {
             ),
             SizedBox(height: 3),
             TextField(
+              controller: contentController,
               maxLines: 5,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -136,12 +155,35 @@ class _BucketEditState extends State<BucketEdit> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => Home()), //home화면으로전환
-                  // );
+                  if (titleController.text.isEmpty ||
+                      contentController.text.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('빈칸이 존재합니다!'),
+                          content: Text('빈칸을 채워주세요!'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    bucketListItemService.updateItem(
+                      index: index,
+                      title: titleController.text,
+                      content: contentController.text,
+                      dttm: dateController.text,
+                    );
+
+                    Navigator.of(context).pop();
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(

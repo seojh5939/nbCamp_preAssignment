@@ -80,33 +80,6 @@ class Home extends StatelessWidget {
                               ),
                             ],
                           ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // ElevatedButton(
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //           builder: (context) => BucketDoneList()),
-                    //     );
-                    //   },
-                    //   style: ElevatedButton.styleFrom(
-                    //     shape: RoundedRectangleBorder(
-                    //       borderRadius: BorderRadius.circular(
-                    //           50), // 반지름 값을 조정하여 동그란 모양으로 설정
-                    //     ),
-                    //     backgroundColor:
-                    //         Color.fromARGB(255, 251, 212, 127), // 주황색으로 설정
-                    //   ),
-                    //   child: Text(
-                    //     '달성 했어요 \u{1F389}',
-                    //     style: TextStyle(
-                    //       fontSize: 20,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
                 Expanded(
@@ -187,10 +160,18 @@ class Home extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: ElevatedButton(
                         onPressed: () {
+                          bucketListItemService.addItem(
+                              title: '', content: '', dttm: '');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BucketEdit()),
+                              builder: (_) => BucketEdit(
+                                index:
+                                    bucketListItemService.bucketList.length - 1,
+                                bucketList: bucketList,
+                                isCreat: true,
+                              ),
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -208,34 +189,9 @@ class Home extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // child: Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: TextField(
-                      //         controller: textEditingController,
-                      //         decoration: InputDecoration(
-                      //           hintText: '이루고 싶은 것을 입력하세요',
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     ElevatedButton(
-                      //       onPressed: () {
-                      //         bucketListItemService.addItem(
-                      //           content: textEditingController.text,
-                      //         );
-                      //         // 기기에 저장
-                      //         bucketListItemService.saveBucketItem();
-                      //         textEditingController.clear();
-                      //       },
-                      //       child: Text('기록하기'),
-                      //     ),
-                      //   ],
-                      // ),
                     ),
             ),
-            SizedBox(
-              height: 50,
-            )
+            SizedBox(height: 50),
           ],
         ),
       );
