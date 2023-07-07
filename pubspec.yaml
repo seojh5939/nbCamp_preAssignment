@@ -28,8 +28,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  syncfusion_flutter_datepicker: ^19.2.62
+  intl: ^0.17.0
   flutter:
     sdk: flutter
+  
 
 
   # The following adds the Cupertino Icons font to your application.
