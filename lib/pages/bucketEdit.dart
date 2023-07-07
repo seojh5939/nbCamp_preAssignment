@@ -1,29 +1,21 @@
-//버켓 수정페이지.
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/BucketListItem.dart';
 import 'package:flutter_application_1/BucketListItem_service.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
-import 'package:flutter_application_1/pages/home.dart';
-import '../alarm_Service.dart';
+import 'package:flutter_application_1/alarm.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_application_1/Util/colorList.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
+//버켓 수정페이지.
 class BucketEdit extends StatelessWidget {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
+  final TextEditingController alarmController = TextEditingController();
 
-  BucketEdit(
-      {super.key,
-      required this.bucketList,
-      required this.index,
-      required this.isCreat});
+  BucketEdit({super.key, required this.index});
 
   final int index;
-  final List<BucketListItem> bucketList;
-  final bool isCreat;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +25,7 @@ class BucketEdit extends StatelessWidget {
     contentController.text = bucketListItem.content;
     titleController.text = bucketListItem.title;
     dateController.text = bucketListItem.dttm;
+    alarmController.text = bucketListItem.alarmDttm;
 
     final ThemeData theme = Theme.of(context); // 테마 가져오기 추가
 
@@ -124,7 +117,8 @@ class BucketEdit extends StatelessWidget {
                             index: index,
                             title: titleController.text,
                             content: contentController.text,
-                            dttm: dateController.text);
+                            dttm: dateController.text,
+                            alarmDttm: alarmController.text);
                       });
                     },
                   ),
@@ -138,57 +132,49 @@ class BucketEdit extends StatelessWidget {
               "   알림 \u{23F0}",
               style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
-            MaterialButton(
-              color: Colors.white,
-              minWidth: double.infinity,
-              height: 45,
-              onPressed: () {
-                final DateFormat formatter = DateFormat('yyyy-MM-dd');
-                final String formatted = formatter.format(DateTime.now());
-                final DateTime datetime = DateTime.parse(formatted);
-                Future<TimeOfDay?> future = showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.fromDateTime(datetime),
-                );
-                // TODO hour && min 값 이상함. 고쳐야 됨.
-                future.then((timeOfDay) {
-                  if (timeOfDay == null) {
-                    return null;
-                  } else {
-                    context.read<AlarmService>().addAlarmItem(
-                          year: datetime.year.toString(),
-                          month: datetime.month.toString(),
-                          day: datetime.day.toString(),
-                          hour: datetime.hour.toString(),
-                          min: datetime.minute.toString(),
-                        );
-                    print(datetime.day.toString());
-                  }
-                });
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: context.watch<AlarmService>().alarmList.isNotEmpty
-                        ? Text(
-                            "${context.watch<AlarmService>().alarmList[0].year}년${context.watch<AlarmService>().alarmList[0].month}월${context.watch<AlarmService>().alarmList[0].day}일 ${context.watch<AlarmService>().alarmList[0].hour}시${context.watch<AlarmService>().alarmList[0].month}분",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          )
-                        : Text(
-                            "알람 설정",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                            ),
-                          ),
+            InkWell(
+              onTap: () {},
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
-                  Icon(Icons.keyboard_arrow_right),
-                ],
+                  hintText: "알람설정이 필요할경우 우측 아이콘을 터치해주세요!",
+                  filled: true,
+                  fillColor: Colors.white,
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.alarm_add),
+                    onPressed: () {
+                      final DateFormat formatter = DateFormat('yyyy-MM-dd');
+                      final String formatted = formatter.format(DateTime.now());
+                      final DateTime datetime = DateTime.parse(formatted);
+                      Future<TimeOfDay?> future = showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.fromDateTime(datetime),
+                      );
+                      future.then((timeOfDay) {
+                        if (timeOfDay == null) {
+                          return null;
+                        } else {
+                          alarmController.text = Alarm(
+                                  year: datetime.year.toString(),
+                                  month: datetime.month.toString(),
+                                  day: datetime.day.toString(),
+                                  hour: timeOfDay.hour.toString(),
+                                  min: timeOfDay.minute.toString())
+                              .print();
+                          bucketListItemService.updateItem(
+                              index: index,
+                              title: titleController.text,
+                              content: contentController.text,
+                              dttm: dateController.text,
+                              alarmDttm: alarmController.text);
+                        }
+                      });
+                    },
+                  ),
+                ),
+                controller: alarmController,
               ),
             ),
             SizedBox(height: 20),
@@ -238,6 +224,7 @@ class BucketEdit extends StatelessWidget {
                       title: titleController.text,
                       content: contentController.text,
                       dttm: dateController.text,
+                      alarmDttm: alarmController.text,
                     );
 
                     Navigator.of(context).pop();
