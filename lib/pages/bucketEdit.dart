@@ -4,6 +4,7 @@ import 'package:flutter_application_1/BucketListItem.dart';
 import 'package:flutter_application_1/BucketListItem_service.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
 import 'package:flutter_application_1/pages/home.dart';
+import '../alarm_Service.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_application_1/Util/colorList.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -131,6 +132,65 @@ class BucketEdit extends StatelessWidget {
                       ? DateFormat('yyyy-MM-dd').format(selectedDate!)
                       : '',
                 ),
+              ),
+            ),
+            SizedBox(height: 20),
+            // 알림기능
+            Text(
+              "   알림 \u{23F0}",
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+            ),
+            MaterialButton(
+              color: Colors.white,
+              minWidth: double.infinity,
+              height: 45,
+              onPressed: () {
+                final DateFormat formatter = DateFormat('yyyy-MM-dd');
+                final String formatted = formatter.format(DateTime.now());
+                final DateTime datetime = DateTime.parse(formatted);
+                Future<TimeOfDay?> future = showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.fromDateTime(datetime),
+                );
+                // TODO hour && min 값 이상함. 고쳐야 됨.
+                future.then((timeOfDay) {
+                  if (timeOfDay == null) {
+                    return null;
+                  } else {
+                    context.read<AlarmService>().addAlarmItem(
+                          year: datetime.year.toString(),
+                          month: datetime.month.toString(),
+                          day: datetime.day.toString(),
+                          hour: datetime.hour.toString(),
+                          min: datetime.minute.toString(),
+                        );
+                    print(datetime.day.toString());
+                  }
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: context.watch<AlarmService>().alarmList.isNotEmpty
+                        ? Text(
+                            "${context.watch<AlarmService>().alarmList[0].year}년${context.watch<AlarmService>().alarmList[0].month}월${context.watch<AlarmService>().alarmList[0].day}일 ${context.watch<AlarmService>().alarmList[0].hour}시${context.watch<AlarmService>().alarmList[0].month}분",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          )
+                        : Text(
+                            "알람 설정",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
+                          ),
+                  ),
+                  Icon(Icons.keyboard_arrow_right),
+                ],
               ),
             ),
             SizedBox(height: 20),
