@@ -29,7 +29,7 @@ class BucketHaveToList extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Dismissible(
-                    key: Key(item.title), //content -> title
+                    key: Key(item.title),
                     background: Container(
                       color: ColorList().orange,
                       child: Align(
@@ -42,12 +42,16 @@ class BucketHaveToList extends StatelessWidget {
                                 Icons.edit,
                                 color: Colors.white,
                               ),
+                              SizedBox(width: 13),
+                              Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              )
                             ],
                           ),
                         ),
                       ),
                     ),
-
                     direction: DismissDirection.startToEnd,
                     confirmDismiss: (DismissDirection direction) async {
                       if (direction == DismissDirection.startToEnd) {
@@ -56,9 +60,21 @@ class BucketHaveToList extends StatelessWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('버킷리스트 수정'),
-                              content: Text('버킷리스트를 수정하시겠습니까?'),
+                              title: Text('MY BUKETLIST'),
+                              content: Text('버킷리스트를 수정/삭제 하시겠습니까?'),
                               actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    bucketListItemService.removeItem(
+                                        index: index);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    '삭제',
+                                    style: TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                                SizedBox(width: 50),
                                 TextButton(
                                   onPressed: () {
                                     Navigator.push(
@@ -77,12 +93,12 @@ class BucketHaveToList extends StatelessWidget {
                                       },
                                     );
                                   },
-                                  child: Text('Yes'),
+                                  child: Text('수정'),
                                 ),
                                 TextButton(
                                   onPressed: () =>
                                       Navigator.of(context).pop(false),
-                                  child: Text('Cancel'),
+                                  child: Text('취소'),
                                 ),
                               ],
                             );
