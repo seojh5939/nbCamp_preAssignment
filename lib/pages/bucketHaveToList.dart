@@ -104,6 +104,7 @@ class BucketHaveToList extends StatelessWidget {
                         color: Colors.green,
                       ),
                       title: Text(item.title),
+                      trailing: Text("\u{23F3} ${item.dttm}   "),
                     ),
                   ),
                 ),
