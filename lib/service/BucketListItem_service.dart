@@ -24,7 +24,7 @@ class BucketListItemService extends ChangeNotifier {
       required String alarmDttm}) {
     bucketList.add(BucketListItem(
         title: title, content: content, dttm: dttm, alarmDttm: alarmDttm));
-    notifyListeners(); //Consumer<MemoService>의 builder 부분을 호출해서 화면 새로고침
+    notifyListeners();
   }
 
   updateItem({
