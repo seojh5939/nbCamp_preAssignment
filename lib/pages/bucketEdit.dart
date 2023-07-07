@@ -13,8 +13,8 @@ class BucketEdit extends StatelessWidget {
   final TextEditingController contentController = TextEditingController();
   final TextEditingController alarmController = TextEditingController();
 
-  BucketEdit({super.key, required this.index});
-
+  BucketEdit({super.key, required this.index, required this.isCreat});
+  final bool isCreat;
   final int index;
 
   @override
